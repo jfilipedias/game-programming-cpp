@@ -18,25 +18,14 @@ bool Game::Initialize()
 		return false;
 	}
 
-	mWindow = SDL_CreateWindow(
-		"Game Programming in C++ (Chapter 1)", // Window title
-		1024, // Width of window
-		768, // Height of window
-		0	// Flags (0 for no flags set)
-	);
-
+	mWindow = SDL_CreateWindow("Game Programming in C++ (Chapter 1)", 1024, 768, 0);
 	if (!mWindow)
 	{
 		SDL_Log("Failed to create window: %s", SDL_GetError());
 		return false;
 	}
 	
-	// Create SDL renderer
-	mRenderer = SDL_CreateRenderer(
-		mWindow, // Window to create renderer for
-		NULL
-	);
-
+	mRenderer = SDL_CreateRenderer(mWindow, NULL);
 	if (!mRenderer)
 	{
 		SDL_Log("Failed to create renderer: %s", SDL_GetError());
@@ -58,7 +47,22 @@ void Game::RunLoop()
 
 void Game::ProcessInput()
 {
+	SDL_Event event;
+	while (SDL_PollEvent(&event))
+	{
+		switch (event.type)
+		{
+			case SDL_EVENT_QUIT:
+				mIsRunning = false;
+				break;
+		}
+	}
 
+	const bool* state = SDL_GetKeyboardState(NULL);
+	if (state[SDL_SCANCODE_ESCAPE])
+	{
+		mIsRunning = false;
+	}
 }
 
 void Game::UpdateGame()

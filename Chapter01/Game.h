@@ -9,14 +9,11 @@ public:
 	void RunLoop();
 	void Shutdown();
 private:
-	// Helper functions for the game loop
 	void ProcessInput();
 	void UpdateGame();
 	void GenerateOutput();
 
-	// Window created by SDL
 	SDL_Window* mWindow;
-	// Renderer for 2D drawing
 	SDL_Renderer* mRenderer;
 	bool mIsRunning;
 };
