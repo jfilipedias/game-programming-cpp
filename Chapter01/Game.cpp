@@ -77,19 +77,42 @@ void Game::ProcessInput()
 	{
 		mIsRunning = false;
 	}
+
+	mPaddleDir = 0;
+	if (state[SDL_SCANCODE_W] || state[SDL_SCANCODE_UP]) {
+		mPaddleDir -= 1;
+	}
+	if (state[SDL_SCANCODE_S] || state[SDL_SCANCODE_DOWN]) {
+		mPaddleDir += 1;
+	}
 }
 
 void Game::UpdateGame()
 {
-	Uint64 deadline = mTicksCount + 16;
+	Uint64 deadline = SDL_GetTicks() + 16;
 	while (deadline > SDL_GetTicks());
 
 	// Delta time in seconds
-	float deltaTime = (SDL_GetTicks() - mTicksCount) / 1000;
+	float deltaTime = (SDL_GetTicks() - mTicksCount) / 1000.0f;
 	if (deltaTime > 0.05f)
 	{
 		deltaTime = 0.05f;
 	}
+
+	if (mPaddleDir != 0)
+	{
+		mPaddlePos.y += mPaddleDir * 300 * deltaTime;
+
+		if (mPaddlePos.y < paddleH / 2.0f + thickness)
+		{
+			mPaddlePos.y = paddleH / 2.0f + thickness;
+		}
+		else if (mPaddlePos.y > 768 - paddleH / 2.0f - thickness)
+		{
+			mPaddlePos.y = 768 - paddleH / 2.0f - thickness;
+		} 
+	}
+
 	mTicksCount = SDL_GetTicks();
 }
 
@@ -97,7 +120,6 @@ void Game::GenerateOutput()
 {
 	SDL_SetRenderDrawColor(mRenderer, 0, 0, 0, 255);
 	SDL_RenderClear(mRenderer);
-
 	SDL_SetRenderDrawColor(mRenderer, 255, 255, 255, 255);
 
 	// Top wall
