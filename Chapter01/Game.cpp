@@ -7,6 +7,7 @@ Game::Game()
 	:mWindow(nullptr)
 	, mRenderer(nullptr)
 	, mIsRunning(true)
+	, mTicksCount(0)
 {
 
 }
@@ -80,7 +81,16 @@ void Game::ProcessInput()
 
 void Game::UpdateGame()
 {
+	Uint64 deadline = mTicksCount + 16;
+	while (deadline > SDL_GetTicks());
 
+	// Delta time in seconds
+	float deltaTime = (SDL_GetTicks() - mTicksCount) / 1000;
+	if (deltaTime > 0.05f)
+	{
+		deltaTime = 0.05f;
+	}
+	mTicksCount = SDL_GetTicks();
 }
 
 void Game::GenerateOutput()

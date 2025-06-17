@@ -23,6 +23,7 @@ private:
 	SDL_Window* mWindow;
 	SDL_Renderer* mRenderer;
 	bool mIsRunning;
+	Uint64 mTicksCount;
 
 	Vector2 mPaddlePos;
 	Vector2 mBallPos;
