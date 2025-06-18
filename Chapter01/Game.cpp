@@ -46,6 +46,9 @@ bool Game::Initialize()
 	mBallPos.x = 1024 / 2;
 	mBallPos.y = 768 / 2;
 
+	mBallVel.x = -200;
+	mBallVel.y = 235;
+
 	return true;
 }
 
@@ -111,6 +114,26 @@ void Game::UpdateGame()
 		{
 			mPaddlePos.y = 768 - paddleH / 2.0f - thickness;
 		} 
+	}
+
+	mBallPos.x += mBallVel.x * deltaTime;
+	mBallPos.y += mBallVel.y * deltaTime;
+
+	if ((mBallPos.y <= thickness && mBallVel.y < 0.0f) ||
+		(mBallPos.y >= 768 - thickness && mBallVel.y > 0.0f))
+	{
+		mBallVel.y *= -1;
+	}
+
+	float diff = mPaddlePos.y - mBallPos.y;
+	diff = diff >= 0.0f ? diff : -diff;
+	if ((diff <= paddleH / 2.0f && mBallPos.x <= 25.0f && mBallPos.x >= 20.0f && mBallVel.x < 0.0f) ||
+		(mBallPos.x >= 1024 - thickness && mBallVel.x > 0.0f)) {
+		mBallVel.x *= -1;
+	}
+	else if (mBallPos.x <= 0.0f) 
+	{
+		mIsRunning = false;
 	}
 
 	mTicksCount = SDL_GetTicks();

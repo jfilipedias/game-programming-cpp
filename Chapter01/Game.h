@@ -28,4 +28,5 @@ private:
 	int mPaddleDir;
 	Vector2 mPaddlePos;
 	Vector2 mBallPos;
+	Vector2 mBallVel;
 };
