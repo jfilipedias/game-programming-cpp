@@ -1,10 +1,12 @@
 #include "Game.h"
+#include <algorithm>
 
 Game::Game()
 	:mWindow(nullptr)
 	, mRenderer(nullptr)
-	, mIsRunning(true)
 	, mTicksCount(0)
+	, mIsRunning(true)
+	, mUpdatingActors(false)
 {
 
 }
@@ -80,9 +82,34 @@ void Game::UpdateGame()
 	{
 		deltaTime = 0.05f;
 	}
-
-
 	mTicksCount = SDL_GetTicks();
+
+	mUpdatingActors = true;
+	for (auto actor : mActors)
+	{
+		actor->Update(deltaTime);
+	}
+	mUpdatingActors = false;
+
+	for (auto pendding : mPenddingActors)
+	{
+		mActors.emplace_back(pendding);
+	}
+	mPenddingActors.clear();
+
+	std::vector<Actor*> deadActors;
+	for (auto actor : mActors)
+	{
+		if (actor->GetState() == Actor::EDead)
+		{
+			deadActors.emplace_back(actor);
+		}
+	}
+
+	for (auto actor : deadActors)
+	{
+		delete actor;
+	}
 }
 
 void Game::GenerateOutput()
@@ -97,4 +124,33 @@ void Game::Shutdown()
 	SDL_DestroyRenderer(mRenderer);
 	SDL_DestroyWindow(mWindow);
 	SDL_Quit();
+}
+
+void Game::AddActor(Actor* actor) 
+{
+	if (mUpdatingActors)
+	{
+		mPenddingActors.emplace_back(actor);
+	}
+	else 
+	{
+		mActors.emplace_back(actor);
+	}
+}
+
+void Game::RemoveActor(Actor* actor)
+{
+	auto iter = std::find(mPenddingActors.begin(), mPenddingActors.end(), actor);
+	if (iter != mPenddingActors.end()) 
+	{
+		std::iter_swap(iter, mPenddingActors.end());
+		mPenddingActors.pop_back();
+	}
+
+	iter = std::find(mActors.begin(), mActors.end(), actor);
+	if (iter != mActors.end())
+	{
+		std::iter_swap(iter, mActors.end());
+		mActors.pop_back();
+	}
 }

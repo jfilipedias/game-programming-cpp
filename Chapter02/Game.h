@@ -1,6 +1,7 @@
 #pragma once
-#include <SDL3/SDL.h>
 #include "Math.h"
+#include <SDL3/SDL.h>
+#include <vector>
 
 class Game
 {
@@ -9,6 +10,10 @@ public:
 	bool Initialize();
 	void RunLoop();
 	void Shutdown();
+
+	void AddActor(class Actor* actor);
+	void RemoveActor(class Actor* actor);
+
 private:
 	void ProcessInput();
 	void UpdateGame();
@@ -16,12 +21,11 @@ private:
 
 	SDL_Window* mWindow;
 	SDL_Renderer* mRenderer;
-	bool mIsRunning;
 	Uint64 mTicksCount;
+	bool mIsRunning;
+	bool mUpdatingActors;
 
-	int mPaddleDir;
-	Vector2 mPaddlePos;
-	Vector2 mBallPos;
-	Vector2 mBallVel;
+	std::vector<class Actor*> mActors;
+	std::vector<class Actor*> mPenddingActors;
 };
 
