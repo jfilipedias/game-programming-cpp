@@ -10,4 +10,3 @@ protected:
 	class Actor* mOwner;
 	int mUpdateOrder;
 };
-
