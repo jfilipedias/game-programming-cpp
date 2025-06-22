@@ -1,5 +1,5 @@
-#include "Game.h"
 #include <algorithm>
+#include "Game.h"
 
 Game::Game()
 	:mWindow(nullptr)
@@ -38,6 +38,8 @@ bool Game::Initialize()
 		SDL_Log("Failed to enable VSync: %s", SDL_GetError());
 		return false;
 	}
+
+	IMG_init();
 
 	return true;
 }
@@ -121,6 +123,11 @@ void Game::GenerateOutput()
 
 void Game::Shutdown()
 {
+	while (!mActors.empty())
+	{
+		delete mActors.back();
+	}
+
 	SDL_DestroyRenderer(mRenderer);
 	SDL_DestroyWindow(mWindow);
 	SDL_Quit();
