@@ -15,11 +15,14 @@ public:
 	virtual ~Actor();
 
 	void Update(float deltaTime);
-	void UpdateComponent(float deltaTime);
+	void UpdateComponents(float deltaTime);
 	virtual void UpdateActor(float deltaTime);
 
 	void AddComponent(class Component* component);
 	void RemoveComponent(class Component* component);
+
+	State GetState() const { return mState; }
+	void SetState(State state) { mState = state; }
 
 private:
 	State mState;

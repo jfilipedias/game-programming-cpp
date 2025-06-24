@@ -1,5 +1,7 @@
 #include <algorithm>
+#include "Actor.h"
 #include "Game.h"
+#include "SpriteComponent.h"
 
 Game::Game()
 	:mWindow(nullptr)
@@ -39,8 +41,6 @@ bool Game::Initialize()
 		return false;
 	}
 
-	IMG_init();
-
 	return true;
 }
 
@@ -52,6 +52,18 @@ void Game::RunLoop()
 		UpdateGame();
 		GenerateOutput();
 	}
+}
+
+void Game::Shutdown()
+{
+	while (!mActors.empty())
+	{
+		delete mActors.back();
+	}
+
+	SDL_DestroyRenderer(mRenderer);
+	SDL_DestroyWindow(mWindow);
+	SDL_Quit();
 }
 
 void Game::ProcessInput()
@@ -121,18 +133,6 @@ void Game::GenerateOutput()
 	SDL_RenderPresent(mRenderer);
 }
 
-void Game::Shutdown()
-{
-	while (!mActors.empty())
-	{
-		delete mActors.back();
-	}
-
-	SDL_DestroyRenderer(mRenderer);
-	SDL_DestroyWindow(mWindow);
-	SDL_Quit();
-}
-
 void Game::AddActor(Actor* actor) 
 {
 	if (mUpdatingActors)
@@ -160,4 +160,26 @@ void Game::RemoveActor(Actor* actor)
 		std::iter_swap(iter, mActors.end());
 		mActors.pop_back();
 	}
+}
+
+void Game::AddSprite(SpriteComponent* sprite) 
+{ 
+	int drawOrder = sprite->GetDrawOrder();
+	auto iter = mSprites.begin();
+	for (; iter != mSprites.end(); ++iter) 
+	{
+		if (drawOrder < (*iter)->GetDrawOrder())
+		{
+			break;
+		}
+	}
+
+	mSprites.insert(iter, sprite);
+}
+
+void Game::RemoveSprite(SpriteComponent* sprite)
+{ 
+	// Can't swap because it ruins ordering
+	auto iter = std::find(mSprites.begin(), mSprites.end(), sprite);
+	mSprites.erase(iter);
 }
