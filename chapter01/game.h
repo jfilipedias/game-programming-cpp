@@ -7,7 +7,6 @@ struct Vector2
 	float y;
 };
 
-
 class Game
 {
 public:
