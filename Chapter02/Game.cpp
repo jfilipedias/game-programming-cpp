@@ -1,7 +1,7 @@
 #include <algorithm>
-#include "Actor.h"
-#include "Game.h"
-#include "SpriteComponent.h"
+#include "actor.h"
+#include "game.h"
+#include "sprite_component.h"
 
 Game::Game()
 	:mWindow(nullptr)

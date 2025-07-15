@@ -1,4 +1,4 @@
-#include "Game.h"
+#include "game.h"
 
 const int thickness = 15;
 const float paddleH = 100;

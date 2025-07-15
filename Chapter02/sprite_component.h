@@ -1,6 +1,6 @@
 #pragma once
 #include<SDL3/SDL.h>
-#include "Component.h"
+#include "component.h"
 
 class SpriteComponent : public Component
 {
@@ -21,4 +21,3 @@ protected:
 	float mTexHeight;
 	float mTexWidth;
 };
-

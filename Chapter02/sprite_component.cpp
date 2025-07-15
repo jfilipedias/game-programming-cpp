@@ -1,5 +1,5 @@
-#include "Math.h"
-#include "SpriteComponent.h"
+#include "math.h"
+#include "sprite_component.h"
 
 SpriteComponent::SpriteComponent(Actor* owner, int drawOrder)
 	:Component(owner)
