@@ -1,35 +1,25 @@
 #pragma once
 
-namespace Math
-{
-	const float Pi = 3.1415926535f;
+namespace Math {
+const float Pi = 3.1415926535f;
 
-	inline float ToRadians(float degrees)
-	{
-		return degrees * Pi / 180.0f;
-	}
-
-	inline float ToDegrees(float radians)
-	{
-		return radians * 180.0f / Pi;
-	}
+inline float ToRadians(float degrees) {
+    return degrees * Pi / 180.0f;
 }
 
-class Vector2
-{
-public:
-	float x;
-	float y;
+inline float ToDegrees(float radians) {
+    return radians * 180.0f / Pi;
+}
+} // namespace Math
 
-	Vector2()
-		:x(0.0f)
-		,y(0.0f)
-	{ }
+class Vector2 {
+  public:
+    float x;
+    float y;
 
-	explicit Vector2(float inX, float inY)
-		:x(inX)
-		,y(inY)
-	{ }
+    Vector2() : x(0.0f), y(0.0f) {}
 
-	static const Vector2 Zero;
+    explicit Vector2(float inX, float inY) : x(inX), y(inY) {}
+
+    static const Vector2 Zero;
 };
