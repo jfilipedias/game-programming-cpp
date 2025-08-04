@@ -3,7 +3,7 @@
 #include <SDL3/SDL.h>
 
 class SpriteComponent : public Component {
-  public:
+public:
     SpriteComponent(class Actor* owner, int drawOrder = 100);
     ~SpriteComponent();
 
@@ -14,7 +14,7 @@ class SpriteComponent : public Component {
     int GetTexHeight() const { return mTexHeight; }
     int GetTexWidth() const { return mTexWidth; }
 
-  protected:
+protected:
     SDL_Texture* mTexture;
     int mDrawOrder;
     float mTexHeight;

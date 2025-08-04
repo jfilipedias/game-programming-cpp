@@ -1,9 +1,8 @@
 #pragma once
-#include "math.h"
 #include <vector>
 
 class Actor {
-  public:
+public:
     enum State {
         EActive,
         EPaused,
@@ -23,9 +22,9 @@ class Actor {
     State GetState() const { return mState; }
     void SetState(State state) { mState = state; }
 
-  private:
+private:
     State mState;
-    Vector2 mPosition;
+    class Vector2 mPosition;
     float mScale;
     float mRotation;
     std::vector<class Component*> mComponents;

@@ -1,10 +1,9 @@
 #pragma once
-#include "math.h"
 #include <SDL3/SDL.h>
 #include <vector>
 
 class Game {
-  public:
+public:
     Game();
     bool Initialize();
     void RunLoop();
@@ -15,7 +14,7 @@ class Game {
     void AddSprite(class SpriteComponent* sprite);
     void RemoveSprite(class SpriteComponent* sprite);
 
-  private:
+private:
     void ProcessInput();
     void UpdateGame();
     void GenerateOutput();

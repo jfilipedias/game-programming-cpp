@@ -13,13 +13,17 @@ inline float ToDegrees(float radians) {
 } // namespace Math
 
 class Vector2 {
-  public:
+public:
     float x;
     float y;
 
-    Vector2() : x(0.0f), y(0.0f) {}
+    Vector2()
+        : x(0.0f),
+          y(0.0f) {}
 
-    explicit Vector2(float inX, float inY) : x(inX), y(inY) {}
+    explicit Vector2(float inX, float inY)
+        : x(inX),
+          y(inY) {}
 
     static const Vector2 Zero;
 };

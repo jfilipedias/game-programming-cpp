@@ -1,9 +1,14 @@
 #include "actor.h"
 #include "component.h"
 #include "game.h"
+#include "math.h"
 
 Actor::Actor(Game* game)
-    : mState(EActive), mPosition(Vector2::Zero), mScale(1.0f), mRotation(0.0f), mGame(game) {
+    : mState(State::EActive),
+      mPosition(Vector2::Zero),
+      mScale(1.0f),
+      mRotation(0.0f),
+      mGame(game) {
     mGame->AddActor(this);
 }
 
@@ -16,14 +21,14 @@ Actor::~Actor() {
 }
 
 void Actor::Update(float deltaTime) {
-    if (mState == EActive) {
+    if (mState == State::EActive) {
         UpdateComponents(deltaTime);
         UpdateActor(deltaTime);
     }
 }
 
 void Actor::UpdateComponents(float deltaTime) {
-    for (auto comp : mComponents) {
+    for (Component* comp : mComponents) {
         comp->Update(deltaTime);
     }
 }
@@ -32,7 +37,7 @@ void Actor::UpdateActor(float deltaTime) {}
 
 void Actor::AddComponent(Component* component) {
     int order = component->GetUpdateOrder();
-    auto iter = mComponents.begin();
+    std::vector<Component*>::iterator iter = mComponents.begin();
     for (; iter != mComponents.end(); ++iter) {
         if (order < (*iter)->GetUpdateOrder()) {
             break;
@@ -43,7 +48,7 @@ void Actor::AddComponent(Component* component) {
 }
 
 void Actor::RemoveComponent(Component* component) {
-    auto iter = std::find(mComponents.begin(), mComponents.end(), component);
+    std::vector<Component*>::iterator iter = std::find(mComponents.begin(), mComponents.end(), component);
     if (iter != mComponents.end()) {
         mComponents.erase(iter);
     }

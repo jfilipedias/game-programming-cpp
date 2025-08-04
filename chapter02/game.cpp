@@ -4,7 +4,11 @@
 #include <algorithm>
 
 Game::Game()
-    : mWindow(nullptr), mRenderer(nullptr), mTicksCount(0), mIsRunning(true), mUpdatingActors(false) {}
+    : mWindow(nullptr),
+      mRenderer(nullptr),
+      mTicksCount(0),
+      mIsRunning(true),
+      mUpdatingActors(false) {}
 
 bool Game::Initialize() {
     bool success = SDL_Init(SDL_INIT_VIDEO);
@@ -79,24 +83,24 @@ void Game::UpdateGame() {
     mTicksCount = SDL_GetTicks();
 
     mUpdatingActors = true;
-    for (auto actor : mActors) {
+    for (Actor* actor : mActors) {
         actor->Update(deltaTime);
     }
     mUpdatingActors = false;
 
-    for (auto pendding : mPenddingActors) {
+    for (Actor* pendding : mPenddingActors) {
         mActors.emplace_back(pendding);
     }
     mPenddingActors.clear();
 
     std::vector<Actor*> deadActors;
-    for (auto actor : mActors) {
+    for (Actor* actor : mActors) {
         if (actor->GetState() == Actor::EDead) {
             deadActors.emplace_back(actor);
         }
     }
 
-    for (auto actor : deadActors) {
+    for (Actor* actor : deadActors) {
         delete actor;
     }
 }
@@ -116,7 +120,7 @@ void Game::AddActor(Actor* actor) {
 }
 
 void Game::RemoveActor(Actor* actor) {
-    auto iter = std::find(mPenddingActors.begin(), mPenddingActors.end(), actor);
+    std::vector<Actor*>::iterator iter = std::find(mPenddingActors.begin(), mPenddingActors.end(), actor);
     if (iter != mPenddingActors.end()) {
         std::iter_swap(iter, mPenddingActors.end());
         mPenddingActors.pop_back();
@@ -131,7 +135,7 @@ void Game::RemoveActor(Actor* actor) {
 
 void Game::AddSprite(SpriteComponent* sprite) {
     int drawOrder = sprite->GetDrawOrder();
-    auto iter = mSprites.begin();
+    std::vector<SpriteComponent*>::iterator iter = mSprites.begin();
     for (; iter != mSprites.end(); ++iter) {
         if (drawOrder < (*iter)->GetDrawOrder()) {
             break;
@@ -143,6 +147,6 @@ void Game::AddSprite(SpriteComponent* sprite) {
 
 void Game::RemoveSprite(SpriteComponent* sprite) {
     // Can't swap because it ruins ordering
-    auto iter = std::find(mSprites.begin(), mSprites.end(), sprite);
+    std::vector<SpriteComponent*>::iterator iter = std::find(mSprites.begin(), mSprites.end(), sprite);
     mSprites.erase(iter);
 }
