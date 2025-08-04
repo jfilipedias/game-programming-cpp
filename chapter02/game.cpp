@@ -23,7 +23,7 @@ bool Game::Initialize() {
         return false;
     }
 
-    mRenderer = SDL_CreateRenderer(mWindow, NULL);
+    mRenderer = SDL_CreateRenderer(mWindow, nullptr);
     if (!mRenderer) {
         SDL_Log("Failed to create renderer: %s", SDL_GetError());
         return false;
@@ -65,7 +65,7 @@ void Game::ProcessInput() {
         }
     }
 
-    const bool* state = SDL_GetKeyboardState(NULL);
+    const bool* state = SDL_GetKeyboardState(nullptr);
     if (state[SDL_SCANCODE_ESCAPE]) {
         mIsRunning = false;
     }
