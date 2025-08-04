@@ -1,16 +1,16 @@
 #include "game.h"
 
-const int thickness = 15;
-const float paddleH = 100;
+const int thickness{ 15 };
+const float paddleH{ 100 };
 
 Game::Game()
-    : mWindow(nullptr),
-      mRenderer(nullptr),
-      mIsRunning(true),
-      mTicksCount(0) {}
+    : mWindow{ nullptr },
+      mRenderer{ nullptr },
+      mIsRunning{ true },
+      mTicksCount{ 0 } {}
 
 bool Game::Initialize() {
-    bool success = SDL_Init(SDL_INIT_VIDEO);
+    bool success{ SDL_Init(SDL_INIT_VIDEO) };
     if (!success) {
         SDL_Log("Unable to initialize SDL: %s", SDL_GetError());
         return false;
@@ -63,7 +63,7 @@ void Game::ProcessInput() {
         }
     }
 
-    const bool* state = SDL_GetKeyboardState(nullptr);
+    const bool* state{ SDL_GetKeyboardState(nullptr) };
     if (state[SDL_SCANCODE_ESCAPE]) {
         mIsRunning = false;
     }
@@ -78,12 +78,12 @@ void Game::ProcessInput() {
 }
 
 void Game::UpdateGame() {
-    Uint64 deadline = SDL_GetTicks() + 16;
+    Uint64 deadline{ SDL_GetTicks() + 16 };
     while (deadline > SDL_GetTicks())
         ;
 
     // Delta time in seconds
-    float deltaTime = (SDL_GetTicks() - mTicksCount) / 1000.0f;
+    float deltaTime{ (SDL_GetTicks() - mTicksCount) / 1000.0f };
     if (deltaTime > 0.05f) {
         deltaTime = 0.05f;
     }
@@ -106,7 +106,7 @@ void Game::UpdateGame() {
         mBallVel.y *= -1;
     }
 
-    float diff = mPaddlePos.y - mBallPos.y;
+    float diff{ mPaddlePos.y - mBallPos.y };
     diff = diff >= 0.0f ? diff : -diff;
     if ((diff <= paddleH / 2.0f && mBallPos.x <= 25.0f && mBallPos.x >= 20.0f &&
          mBallVel.x < 0.0f) ||

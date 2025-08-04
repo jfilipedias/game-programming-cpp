@@ -18,12 +18,12 @@ public:
     float y;
 
     Vector2()
-        : x(0.0f),
-          y(0.0f) {}
+        : x{ 0.0f },
+          y{ 0.0f } {}
 
     explicit Vector2(float inX, float inY)
-        : x(inX),
-          y(inY) {}
+        : x{ inX },
+          y{ inY } {}
 
     static const Vector2 Zero;
 };

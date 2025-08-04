@@ -4,11 +4,11 @@
 #include "math.h"
 
 Actor::Actor(Game* game)
-    : mState(State::EActive),
-      mPosition(Vector2::Zero),
-      mScale(1.0f),
-      mRotation(0.0f),
-      mGame(game) {
+    : mState{ State::EActive },
+      mPosition{ Vector2::Zero },
+      mScale{ 1.0f },
+      mRotation{ 0.0f },
+      mGame{ game } {
     mGame->AddActor(this);
 }
 
@@ -36,7 +36,7 @@ void Actor::UpdateComponents(float deltaTime) {
 void Actor::UpdateActor(float deltaTime) {}
 
 void Actor::AddComponent(Component* component) {
-    int order = component->GetUpdateOrder();
+    int order{ component->GetUpdateOrder() };
     std::vector<Component*>::iterator iter;
     for (iter = mComponents.begin(); iter != mComponents.end(); ++iter) {
         if (order < (*iter)->GetUpdateOrder()) {
@@ -48,7 +48,7 @@ void Actor::AddComponent(Component* component) {
 }
 
 void Actor::RemoveComponent(Component* component) {
-    std::vector<Component*>::iterator iter = std::find(mComponents.begin(), mComponents.end(), component);
+    std::vector<Component*>::iterator iter{ std::find(mComponents.begin(), mComponents.end(), component) };
     if (iter != mComponents.end()) {
         mComponents.erase(iter);
     }

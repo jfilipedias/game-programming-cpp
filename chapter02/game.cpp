@@ -4,14 +4,14 @@
 #include <algorithm>
 
 Game::Game()
-    : mWindow(nullptr),
-      mRenderer(nullptr),
-      mTicksCount(0),
-      mIsRunning(true),
-      mUpdatingActors(false) {}
+    : mWindow{ nullptr },
+      mRenderer{ nullptr },
+      mTicksCount{ 0 },
+      mIsRunning{ true },
+      mUpdatingActors{ false } {}
 
 bool Game::Initialize() {
-    bool success = SDL_Init(SDL_INIT_VIDEO);
+    bool success{ SDL_Init(SDL_INIT_VIDEO) };
     if (!success) {
         SDL_Log("Unable to initialize SDL: %s", SDL_GetError());
         return false;
@@ -69,7 +69,7 @@ void Game::ProcessInput() {
         }
     }
 
-    const bool* state = SDL_GetKeyboardState(nullptr);
+    const bool* state{ SDL_GetKeyboardState(nullptr) };
     if (state[SDL_SCANCODE_ESCAPE]) {
         mIsRunning = false;
     }
@@ -131,7 +131,7 @@ void Game::AddActor(Actor* actor) {
 }
 
 void Game::RemoveActor(Actor* actor) {
-    std::vector<Actor*>::iterator iter = std::find(mPenddingActors.begin(), mPenddingActors.end(), actor);
+    std::vector<Actor*>::iterator iter{ std::find(mPenddingActors.begin(), mPenddingActors.end(), actor) };
     if (iter != mPenddingActors.end()) {
         std::iter_swap(iter, mPenddingActors.end());
         mPenddingActors.pop_back();
@@ -145,7 +145,7 @@ void Game::RemoveActor(Actor* actor) {
 }
 
 void Game::AddSprite(SpriteComponent* sprite) {
-    int drawOrder = sprite->GetDrawOrder();
+    int drawOrder{ sprite->GetDrawOrder() };
     std::vector<SpriteComponent*>::const_iterator iter;
     for (iter = mSprites.begin(); iter != mSprites.end(); ++iter) {
         if (drawOrder < (*iter)->GetDrawOrder()) {
@@ -158,6 +158,6 @@ void Game::AddSprite(SpriteComponent* sprite) {
 
 void Game::RemoveSprite(SpriteComponent* sprite) {
     // Can't swap because it ruins ordering
-    std::vector<SpriteComponent*>::const_iterator iter = std::find(mSprites.begin(), mSprites.end(), sprite);
+    std::vector<SpriteComponent*>::const_iterator iter{ std::find(mSprites.begin(), mSprites.end(), sprite) };
     mSprites.erase(iter);
 }
