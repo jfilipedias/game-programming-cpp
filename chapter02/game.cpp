@@ -17,7 +17,7 @@ bool Game::Initialize() {
         return false;
     }
 
-    mWindow = SDL_CreateWindow("Game Programming in C++ (Chapter 1)", 1024, 768, 0);
+    mWindow = SDL_CreateWindow("Game Programming in C++ (Chapter 2)", 1024, 768, 0);
     if (!mWindow) {
         SDL_Log("Failed to create window: %s", SDL_GetError());
         return false;
@@ -135,8 +135,8 @@ void Game::RemoveActor(Actor* actor) {
 
 void Game::AddSprite(SpriteComponent* sprite) {
     int drawOrder = sprite->GetDrawOrder();
-    std::vector<SpriteComponent*>::iterator iter = mSprites.begin();
-    for (; iter != mSprites.end(); ++iter) {
+    std::vector<SpriteComponent*>::const_iterator iter;
+    for (iter = mSprites.begin(); iter != mSprites.end(); ++iter) {
         if (drawOrder < (*iter)->GetDrawOrder()) {
             break;
         }
@@ -147,6 +147,6 @@ void Game::AddSprite(SpriteComponent* sprite) {
 
 void Game::RemoveSprite(SpriteComponent* sprite) {
     // Can't swap because it ruins ordering
-    std::vector<SpriteComponent*>::iterator iter = std::find(mSprites.begin(), mSprites.end(), sprite);
+    std::vector<SpriteComponent*>::const_iterator iter = std::find(mSprites.begin(), mSprites.end(), sprite);
     mSprites.erase(iter);
 }

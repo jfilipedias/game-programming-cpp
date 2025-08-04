@@ -23,7 +23,7 @@ public:
     State GetState() const { return mState; }
     void SetState(State state) { mState = state; }
 
-    class Game* GetGame() const { return mGame; }
+    class Game* GetGame() { return mGame; }
 
 private:
     State mState;

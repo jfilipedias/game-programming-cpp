@@ -37,8 +37,8 @@ void Actor::UpdateActor(float deltaTime) {}
 
 void Actor::AddComponent(Component* component) {
     int order = component->GetUpdateOrder();
-    std::vector<Component*>::iterator iter = mComponents.begin();
-    for (; iter != mComponents.end(); ++iter) {
+    std::vector<Component*>::iterator iter;
+    for (iter = mComponents.begin(); iter != mComponents.end(); ++iter) {
         if (order < (*iter)->GetUpdateOrder()) {
             break;
         }

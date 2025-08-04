@@ -1,4 +1,6 @@
 #include "sprite_component.h"
+#include "actor.h"
+#include "game.h"
 #include "math.h"
 
 SpriteComponent::SpriteComponent(Actor* owner, int drawOrder)
@@ -25,8 +27,14 @@ void SpriteComponent::Draw(SDL_Renderer* renderer) {
     rect.x = mOwner->GetPosition().x - rect.w / 2;
     rect.y = mOwner->GetPosition().y - rect.h / 2;
 
-    SDL_RenderTextureRotated(renderer, mTexture, nullptr, &rect,
-                             -Math::ToDegrees(mOwner->GetRotation()), nullptr, SDL_FLIP_NONE);
+    SDL_RenderTextureRotated(
+        renderer,
+        mTexture,
+        nullptr,
+        &rect,
+        -Math::ToDegrees(mOwner->GetRotation()),
+        nullptr,
+        SDL_FLIP_NONE);
 }
 
 void SpriteComponent::SetTexture(SDL_Texture* texture) {
