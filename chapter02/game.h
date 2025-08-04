@@ -18,6 +18,7 @@ private:
     void ProcessInput();
     void UpdateGame();
     void GenerateOutput();
+    void LoadData();
 
     SDL_Window* mWindow;
     SDL_Renderer* mRenderer;

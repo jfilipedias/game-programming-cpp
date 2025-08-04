@@ -34,6 +34,10 @@ bool Game::Initialize() {
         return false;
     }
 
+    LoadData();
+
+    mTicksCount = SDL_GetTicks();
+
     return true;
 }
 
@@ -108,8 +112,15 @@ void Game::UpdateGame() {
 void Game::GenerateOutput() {
     SDL_SetRenderDrawColor(mRenderer, 0, 0, 0, 255);
     SDL_RenderClear(mRenderer);
+
+    for (SpriteComponent* sprite : mSprites) {
+        sprite->Draw(mRenderer);
+    }
+
     SDL_RenderPresent(mRenderer);
 }
+
+void Game::LoadData() {}
 
 void Game::AddActor(Actor* actor) {
     if (mUpdatingActors) {
