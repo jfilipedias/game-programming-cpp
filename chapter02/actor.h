@@ -1,4 +1,5 @@
 #pragma once
+#include "math.h"
 #include <vector>
 
 class Actor {
@@ -22,9 +23,11 @@ public:
     State GetState() const { return mState; }
     void SetState(State state) { mState = state; }
 
+    class Game* GetGame() const { return mGame; }
+
 private:
     State mState;
-    class Vector2 mPosition;
+    Vector2 mPosition;
     float mScale;
     float mRotation;
     std::vector<class Component*> mComponents;
