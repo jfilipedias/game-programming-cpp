@@ -2,6 +2,7 @@
 BasedOnStyle: LLVM
 IndentWidth: 4
 TabWidth: 4
+AccessModifierOffset: -4
 UseTab: Never
 AllowShortFunctionsOnASingleLine: Inline
 SpacesBeforeTrailingComments: 1
@@ -10,4 +11,5 @@ ColumnLimit: 0
 Cpp11BracedListStyle: false
 DerivePointerAlignment: false
 PointerAlignment: Left
+PackConstructorInitializers: Never
 ...

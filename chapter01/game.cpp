@@ -3,7 +3,11 @@
 const int thickness = 15;
 const float paddleH = 100;
 
-Game::Game() : mWindow(nullptr), mRenderer(nullptr), mIsRunning(true), mTicksCount(0) {}
+Game::Game()
+    : mWindow(nullptr),
+      mRenderer(nullptr),
+      mIsRunning(true),
+      mTicksCount(0) {}
 
 bool Game::Initialize() {
     bool success = SDL_Init(SDL_INIT_VIDEO);
@@ -121,7 +125,7 @@ void Game::GenerateOutput() {
     SDL_SetRenderDrawColor(mRenderer, 255, 255, 255, 255);
 
     // Top wall
-    SDL_FRect wall{0, 0, 1024, thickness};
+    SDL_FRect wall{ 0, 0, 1024, thickness };
     SDL_RenderFillRect(mRenderer, &wall);
 
     // Bottom wall
@@ -135,10 +139,10 @@ void Game::GenerateOutput() {
     wall.h = 1024;
     SDL_RenderFillRect(mRenderer, &wall);
 
-    SDL_FRect paddle{mPaddlePos.x, mPaddlePos.y - paddleH / 2, thickness, paddleH};
+    SDL_FRect paddle{ mPaddlePos.x, mPaddlePos.y - paddleH / 2, thickness, paddleH };
     SDL_RenderFillRect(mRenderer, &paddle);
 
-    SDL_FRect ball{mBallPos.x - thickness / 2, mBallPos.y - thickness / 2, thickness, thickness};
+    SDL_FRect ball{ mBallPos.x - thickness / 2, mBallPos.y - thickness / 2, thickness, thickness };
     SDL_RenderFillRect(mRenderer, &ball);
 
     SDL_RenderPresent(mRenderer);

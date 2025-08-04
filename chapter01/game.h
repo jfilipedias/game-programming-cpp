@@ -7,13 +7,13 @@ struct Vector2 {
 };
 
 class Game {
-  public:
+public:
     Game();
     bool Initialize();
     void RunLoop();
     void Shutdown();
 
-  private:
+private:
     void ProcessInput();
     void UpdateGame();
     void GenerateOutput();
