@@ -3,6 +3,7 @@
 #include "bg_sprite_component.h"
 #include "ship.h"
 #include "sprite_component.h"
+#include <SDL3_image/SDL_image.h>
 #include <algorithm>
 
 Game::Game()
@@ -198,4 +199,28 @@ void Game::RemoveSprite(SpriteComponent* sprite) {
     // Can't swap because it ruins ordering
     std::vector<SpriteComponent*>::const_iterator iter{ std::find(mSprites.begin(), mSprites.end(), sprite) };
     mSprites.erase(iter);
+}
+
+SDL_Texture* Game::GetTexture(const std::string& fileName) {
+    std::unordered_map<std::string, SDL_Texture*>::iterator iter{ mTextures.find(fileName.c_str()) };
+    if (iter != mTextures.end()) {
+        return iter->second;
+    }
+
+    SDL_Surface* surf{ IMG_Load(fileName.c_str()) };
+    if (!surf) {
+        SDL_Log("Failed to load texture file %s", fileName.c_str());
+        return nullptr;
+    }
+
+    SDL_Texture* tex{ SDL_CreateTextureFromSurface(mRenderer, surf) };
+    SDL_DestroySurface(surf);
+
+    if (!tex) {
+        SDL_Log("Failed to convert surface to texture for %s", fileName.c_str());
+        return nullptr;
+    }
+
+    mTextures.emplace(tex);
+    return tex;
 }
