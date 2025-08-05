@@ -221,6 +221,6 @@ SDL_Texture* Game::GetTexture(const std::string& fileName) {
         return nullptr;
     }
 
-    mTextures.emplace(tex);
+    mTextures.emplace(fileName.c_str(), tex);
     return tex;
 }
