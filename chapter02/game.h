@@ -1,6 +1,7 @@
 #pragma once
 #include <SDL3/SDL.h>
 #include <string>
+#include <unordered_map>
 #include <vector>
 
 class Game {
@@ -22,6 +23,7 @@ private:
     void UpdateGame();
     void GenerateOutput();
     void LoadData();
+    void UnloadData();
 
     SDL_Window* mWindow;
     SDL_Renderer* mRenderer;
@@ -29,7 +31,11 @@ private:
     bool mIsRunning;
     bool mUpdatingActors;
 
+    class Ship* mShip;
+
     std::vector<class Actor*> mActors;
     std::vector<class Actor*> mPenddingActors;
     std::vector<class SpriteComponent*> mSprites;
+
+    std::unordered_map<std::string, SDL_Texture*> mTextures;
 };

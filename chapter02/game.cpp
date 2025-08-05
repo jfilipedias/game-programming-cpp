@@ -1,5 +1,7 @@
 #include "game.h"
 #include "actor.h"
+#include "bg_sprite_component.h"
+#include "ship.h"
 #include "sprite_component.h"
 #include <algorithm>
 
@@ -41,22 +43,58 @@ bool Game::Initialize() {
     return true;
 }
 
+void Game::Shutdown() {
+    UnloadData();
+    SDL_DestroyRenderer(mRenderer);
+    SDL_DestroyWindow(mWindow);
+    SDL_Quit();
+}
+
+void Game::LoadData() {
+    mShip = new Ship(this);
+    mShip->SetPosition(Vector2{ 512.0f, 384.0f });
+
+    Actor* bgActor = new Actor(this);
+    bgActor->SetPosition(Vector2{ 512.0f, 384.0f });
+
+    std::vector<SDL_Texture*> bgTex{
+        GetTexture("assets/background-01.png"),
+        GetTexture("assets/background-02.png")
+    };
+
+    BGSpriteComponent* bgComp = new BGSpriteComponent{ bgActor };
+    bgComp->SetScreenSize(Vector2{ 1024.0f, 768.0f });
+    bgComp->SetScrollSpeed(-100.0f);
+    bgComp->SetBGTextures(bgTex);
+
+    std::vector<SDL_Texture*> starsTex{
+        GetTexture("assets/stars.png"),
+        GetTexture("assets/stars.png")
+    };
+
+    bgComp = new BGSpriteComponent{ bgActor };
+    bgComp->SetScreenSize(Vector2{ 1024.0f, 768.0f });
+    bgComp->SetScrollSpeed(-200.0f);
+    bgComp->SetBGTextures(starsTex);
+}
+
+void Game::UnloadData() {
+    while (!mActors.empty()) {
+        delete mActors.back();
+    }
+
+    for (std::pair<std::string, SDL_Texture*> pair : mTextures) {
+        SDL_DestroyTexture(pair.second);
+    }
+    mTextures.clear();
+}
+
 void Game::RunLoop() {
     while (mIsRunning) {
         ProcessInput();
         UpdateGame();
         GenerateOutput();
     }
-}
-
-void Game::Shutdown() {
-    while (!mActors.empty()) {
-        delete mActors.back();
-    }
-
-    SDL_DestroyRenderer(mRenderer);
-    SDL_DestroyWindow(mWindow);
-    SDL_Quit();
 }
 
 void Game::ProcessInput() {
@@ -73,6 +111,8 @@ void Game::ProcessInput() {
     if (state[SDL_SCANCODE_ESCAPE]) {
         mIsRunning = false;
     }
+
+    mShip->ProcessKeyboard(state);
 }
 
 void Game::UpdateGame() {
@@ -119,8 +159,6 @@ void Game::GenerateOutput() {
 
     SDL_RenderPresent(mRenderer);
 }
-
-void Game::LoadData() {}
 
 void Game::AddActor(Actor* actor) {
     if (mUpdatingActors) {
