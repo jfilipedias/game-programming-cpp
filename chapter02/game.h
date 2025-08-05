@@ -1,5 +1,6 @@
 #pragma once
 #include <SDL3/SDL.h>
+#include <string>
 #include <vector>
 
 class Game {
@@ -13,6 +14,8 @@ public:
     void RemoveActor(class Actor* actor);
     void AddSprite(class SpriteComponent* sprite);
     void RemoveSprite(class SpriteComponent* sprite);
+
+    SDL_Texture* GetTexture(const std::string& fileName);
 
 private:
     void ProcessInput();
