@@ -12,8 +12,8 @@ public:
 
     void SetBGTextures(const std::vector<SDL_Texture*>& textures);
     void SetScreenSize(const Vector2& size) { mScreenSize = size; }
-    void SetScrollSpeed(float speed) { mScreenSpeed = speed; }
-    float GetScrollSpeed() { return mScreenSpeed; }
+    void SetScrollSpeed(float speed) { mScrollSpeed = speed; }
+    float GetScrollSpeed() { return mScrollSpeed; }
 
 private:
     struct BGTexture {
@@ -23,5 +23,5 @@ private:
 
     std::vector<BGTexture> mBGTextures;
     Vector2 mScreenSize;
-    float mScreenSpeed;
+    float mScrollSpeed;
 };
