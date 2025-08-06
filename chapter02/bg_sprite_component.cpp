@@ -10,8 +10,7 @@ void BGSpriteComponent::Update(float deltaTime) {
     for (BGTexture& bgTex : mBGTextures) {
         bgTex.mOffset.x += mScrollSpeed * deltaTime;
 
-        bool isOffScreen{ bgTex.mOffset.x < -mScreenSize.x };
-        if (isOffScreen) {
+        if (bgTex.mOffset.x < -mScreenSize.x) {
             // Reset offset to the right of the last bg texture
             bgTex.mOffset.x = (mBGTextures.size() - 1) * mScreenSize.x - 1;
         }
@@ -26,7 +25,7 @@ void BGSpriteComponent::Draw(SDL_Renderer* renderer) {
         rect.x = mOwner->GetPosition().x - mScreenSize.x / 2 + bgText.mOffset.x;
         rect.y = mOwner->GetPosition().y - mScreenSize.y / 2 + bgText.mOffset.y;
 
-        SDL_RenderTexture(renderer, bgText.mTexture, nullptr, &rect);
+        SDL_RenderTexture(renderer, Text, nullptr, &rect);
     }
 }
 

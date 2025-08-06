@@ -21,7 +21,7 @@ public:
 private:
     void ProcessInput();
     void UpdateGame();
-    void GenerateOutput();
+    void GenerateOutput() const;
     void LoadData();
     void UnloadData();
 

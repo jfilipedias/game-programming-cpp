@@ -11,7 +11,8 @@ Game::Game()
       mRenderer{ nullptr },
       mTicksCount{ 0 },
       mIsRunning{ true },
-      mUpdatingActors{ false } {}
+      mUpdatingActors{ false },
+      mShip(nullptr) {}
 
 bool Game::Initialize() {
     bool success{ SDL_Init(SDL_INIT_VIDEO) };
@@ -105,6 +106,7 @@ void Game::ProcessInput() {
         case SDL_EVENT_QUIT:
             mIsRunning = false;
             break;
+        default:;
         }
     }
 
@@ -150,7 +152,7 @@ void Game::UpdateGame() {
     }
 }
 
-void Game::GenerateOutput() {
+void Game::GenerateOutput() const {
     SDL_SetRenderDrawColor(mRenderer, 0, 0, 0, 255);
     SDL_RenderClear(mRenderer);
 

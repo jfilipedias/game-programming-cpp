@@ -7,7 +7,7 @@ public:
     AnimSpriteComponent(class Actor* owner, int drawOrder = 100);
 
     void Update(float deltaTimer) override;
-    void SetAnimTextures(std::vector<SDL_Texture*>& textures);
+    void SetAnimTextures(const std::vector<SDL_Texture*>& textures);
 
     float GetAnimFPS() const { return mAnimFPS; }
     void SetAnimFPS(float fps) { mAnimFPS = fps; }

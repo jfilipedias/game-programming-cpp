@@ -19,7 +19,7 @@ void AnimSpriteComponent::Update(float deltaTime) {
     }
 }
 
-void AnimSpriteComponent::SetAnimTextures(std::vector<SDL_Texture*>& textures) {
+void AnimSpriteComponent::SetAnimTextures(const std::vector<SDL_Texture*>& textures) {
     mAnimTextures = textures;
     if (mAnimTextures.size() > 0) {
         mCurrFrame = 0.0f;

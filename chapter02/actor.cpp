@@ -27,7 +27,7 @@ void Actor::Update(float deltaTime) {
     }
 }
 
-void Actor::UpdateComponents(float deltaTime) {
+void Actor::UpdateComponents(float deltaTime) const {
     for (Component* comp : mComponents) {
         comp->Update(deltaTime);
     }
@@ -35,7 +35,7 @@ void Actor::UpdateComponents(float deltaTime) {
 
 void Actor::UpdateActor(float deltaTime) {}
 
-void Actor::AddComponent(Component* component) {
+void Actor::AddComponent(const Component* component) {
     int order{ component->GetUpdateOrder() };
     std::vector<Component*>::iterator iter;
     for (iter = mComponents.begin(); iter != mComponents.end(); ++iter) {
@@ -47,8 +47,8 @@ void Actor::AddComponent(Component* component) {
     mComponents.erase(iter);
 }
 
-void Actor::RemoveComponent(Component* component) {
-    std::vector<Component*>::iterator iter{ std::find(mComponents.begin(), mComponents.end(), component) };
+void Actor::RemoveComponent(const Component* component) {
+    std::vector<Component*>::iterator iter{ std::ranges::find(mComponents, component) };
     if (iter != mComponents.end()) {
         mComponents.erase(iter);
     }

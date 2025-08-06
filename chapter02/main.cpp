@@ -2,8 +2,7 @@
 
 int main(int argc, char const* argv[]) {
     Game game;
-    bool success{ game.Initialize() };
-    if (success) {
+    if (game.Initialize()) {
         game.RunLoop();
     }
 
