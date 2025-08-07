@@ -18,14 +18,14 @@ void BGSpriteComponent::Update(float deltaTime) {
 }
 
 void BGSpriteComponent::Draw(SDL_Renderer* renderer) {
-    for (BGTexture& bgText : mBGTextures) {
+    for (BGTexture& bgTex : mBGTextures) {
         SDL_FRect rect;
         rect.w = mScreenSize.x;
         rect.h = mScreenSize.y;
-        rect.x = mOwner->GetPosition().x - mScreenSize.x / 2 + bgText.mOffset.x;
-        rect.y = mOwner->GetPosition().y - mScreenSize.y / 2 + bgText.mOffset.y;
+        rect.x = mOwner->GetPosition().x - mScreenSize.x / 2 + bgTex.mOffset.x;
+        rect.y = mOwner->GetPosition().y - mScreenSize.y / 2 + bgTex.mOffset.y;
 
-        SDL_RenderTexture(renderer, Text, nullptr, &rect);
+        SDL_RenderTexture(renderer, bgTex.mTexture, nullptr, &rect);
     }
 }
 

@@ -1,7 +1,7 @@
 #include "sprite_component.h"
 #include "actor.h"
 #include "game.h"
-#include "math.h"
+#include "game_math.h"
 
 SpriteComponent::SpriteComponent(Actor* owner, int drawOrder)
     : Component{ owner },

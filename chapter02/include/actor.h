@@ -1,5 +1,5 @@
 #pragma once
-#include "math.h"
+#include "game_math.h"
 #include <vector>
 
 class Actor {
@@ -17,7 +17,7 @@ public:
     void UpdateComponents(float deltaTime) const;
     virtual void UpdateActor(float deltaTime);
 
-    void AddComponent(const class Component* component);
+    void AddComponent(class Component* component);
     void RemoveComponent(const class Component* component);
 
     const Vector2& GetPosition() const { return mPosition; }

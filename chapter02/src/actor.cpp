@@ -1,10 +1,10 @@
 #include "actor.h"
 #include "component.h"
 #include "game.h"
-#include "math.h"
+#include "game_math.h"
 
 Actor::Actor(Game* game)
-    : mState{ State::EActive },
+    : mState{ EActive },
       mPosition{ Vector2::Zero },
       mScale{ 1.0f },
       mRotation{ 0.0f },
@@ -35,16 +35,16 @@ void Actor::UpdateComponents(float deltaTime) const {
 
 void Actor::UpdateActor(float deltaTime) {}
 
-void Actor::AddComponent(const Component* component) {
+void Actor::AddComponent(Component* component) {
     int order{ component->GetUpdateOrder() };
-    std::vector<Component*>::iterator iter;
+    std::vector<Component*>::const_iterator iter;
     for (iter = mComponents.begin(); iter != mComponents.end(); ++iter) {
         if (order < (*iter)->GetUpdateOrder()) {
             break;
         }
     }
 
-    mComponents.erase(iter);
+    mComponents.insert(iter, component);
 }
 
 void Actor::RemoveComponent(const Component* component) {
