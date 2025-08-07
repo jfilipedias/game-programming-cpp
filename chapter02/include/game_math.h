@@ -1,12 +1,12 @@
 #pragma once
 
-namespace Math {
+namespace GameMath {
 const float Pi = 3.1415926535f;
 
 inline float ToDegrees(float radians) {
     return radians * 180.0f / Pi;
 }
-} // namespace Math
+} // namespace GameMath
 
 class Vector2 {
 public:

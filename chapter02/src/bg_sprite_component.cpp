@@ -33,7 +33,7 @@ void BGSpriteComponent::SetBGTextures(const std::vector<SDL_Texture*>& textures)
     int count{ 0 };
     for (SDL_Texture* tex : textures) {
         BGTexture bgTexture{ tex, Vector2{ count * mScreenSize.x, 0 } };
-        mBGTextures.emplace_back(bgTexture);
+        mBGTextures.push_back(bgTexture);
         count++;
     }
 }

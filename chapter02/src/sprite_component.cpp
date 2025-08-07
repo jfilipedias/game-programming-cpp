@@ -32,7 +32,7 @@ void SpriteComponent::Draw(SDL_Renderer* renderer) {
         mTexture,
         nullptr,
         &rect,
-        -Math::ToDegrees(mOwner->GetRotation()),
+        -GameMath::ToDegrees(mOwner->GetRotation()),
         nullptr,
         SDL_FLIP_NONE);
 }

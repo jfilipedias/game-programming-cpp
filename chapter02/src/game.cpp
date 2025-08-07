@@ -136,14 +136,14 @@ void Game::UpdateGame() {
     mUpdatingActors = false;
 
     for (Actor* pendding : mPenddingActors) {
-        mActors.emplace_back(pendding);
+        mActors.push_back(pendding);
     }
     mPenddingActors.clear();
 
     std::vector<Actor*> deadActors;
     for (Actor* actor : mActors) {
         if (actor->GetState() == Actor::EDead) {
-            deadActors.emplace_back(actor);
+            deadActors.push_back(actor);
         }
     }
 
@@ -165,9 +165,9 @@ void Game::GenerateOutput() const {
 
 void Game::AddActor(Actor* actor) {
     if (mUpdatingActors) {
-        mPenddingActors.emplace_back(actor);
+        mPenddingActors.push_back(actor);
     } else {
-        mActors.emplace_back(actor);
+        mActors.push_back(actor);
     }
 }
 
