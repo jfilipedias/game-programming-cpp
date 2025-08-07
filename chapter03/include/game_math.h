@@ -48,16 +48,16 @@ public:
     }
 
     // Vector addition +=
-    Vector2& operator+=(const Vector2& right) {
-        x += right.x;
-        y += right.y;
+    Vector2& operator+=(const Vector2& vec) {
+        x += vec.x;
+        y += vec.y;
         return *this;
     }
 
     // Vector subtraction -=
-    Vector2& operator-=(const Vector2& right) {
-        x -= right.x;
-        y -= right.y;
+    Vector2& operator-=(const Vector2& vec) {
+        x -= vec.x;
+        y -= vec.y;
         return *this;
     }
 
@@ -68,18 +68,24 @@ public:
         return *this;
     }
 
-    float LengthSq() const {
+    float LengthSquared() const {
         return x * x + y * y;
     }
 
     float Length() const {
-        return GameMath::Sqrt(LengthSq());
+        return GameMath::Sqrt(LengthSquared());
     }
 
     float Normalize() {
         float length{ Length() };
         x /= length;
         y /= length;
+    }
+
+    static Vector2 Normalize(const Vector2& vec) {
+        Vector2 temp{ vec };
+        temp.Normalize();
+        return temp;
     }
 
     static const Vector2 Zero;
