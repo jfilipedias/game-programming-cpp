@@ -3,6 +3,8 @@
 
 namespace GameMath {
 const float Pi = 3.1415926535f;
+const float TwoPi = Pi * 2.0f;
+const float PiOver2 = Pi / 2.0f;
 
 inline float ToRadian(float degrees) {
     return degrees * Pi / 180.0f;

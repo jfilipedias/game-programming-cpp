@@ -1,5 +1,9 @@
 #include "game.h"
 #include "actor.h"
+#include "asteroid.h"
+#include "game_math.h"
+#include "game_random.h"
+#include "ship.h"
 #include "sprite_component.h"
 #include <SDL3_image/SDL_image.h>
 #include <algorithm>
@@ -19,7 +23,7 @@ bool Game::Initialize() {
         return false;
     }
 
-    mWindow = SDL_CreateWindow("Game Programming in C++ (Chapter 2)", 1024, 768, 0);
+    mWindow = SDL_CreateWindow("Game Programming in C++ (Chapter 3)", 1024, 768, 0);
     if (!mWindow) {
         SDL_Log("Failed to create window: %s", SDL_GetError());
         return false;
@@ -36,6 +40,8 @@ bool Game::Initialize() {
         return false;
     }
 
+    GameRandom::Init();
+
     LoadData();
 
     mTicksCount = SDL_GetTicks();
@@ -50,7 +56,16 @@ void Game::Shutdown() {
     SDL_Quit();
 }
 
-void Game::LoadData() {}
+void Game::LoadData() {
+    mShip = new Ship{ this };
+    mShip->SetPosition(Vector2{ 512.0f, 384.0f });
+    mShip->SetRotation(GameMath::PiOver2);
+
+    const int numAsteroids{ 20 };
+    for (int i{ 0 }; i < 20; i++) {
+        new Asteroid{ this };
+    }
+}
 
 void Game::UnloadData() {
     while (!mActors.empty()) {
