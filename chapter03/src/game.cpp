@@ -101,6 +101,12 @@ void Game::ProcessInput() {
     if (state[SDL_SCANCODE_ESCAPE]) {
         mIsRunning = false;
     }
+
+    mUpdatingActors = true;
+    for (Actor* actor : mActors) {
+        actor->ProcessInput(state);
+    }
+    mUpdatingActors = false;
 }
 
 void Game::UpdateGame() {
