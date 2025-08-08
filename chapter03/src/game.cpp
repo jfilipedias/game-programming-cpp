@@ -1,7 +1,5 @@
 #include "game.h"
 #include "actor.h"
-#include "bg_sprite_component.h"
-#include "ship.h"
 #include "sprite_component.h"
 #include <SDL3_image/SDL_image.h>
 #include <algorithm>
@@ -52,33 +50,7 @@ void Game::Shutdown() {
     SDL_Quit();
 }
 
-void Game::LoadData() {
-    mShip = new Ship(this);
-    mShip->SetPosition(Vector2{ 512.0f, 384.0f });
-
-    Actor* bgActor = new Actor(this);
-    bgActor->SetPosition(Vector2{ 512.0f, 384.0f });
-
-    std::vector<SDL_Texture*> bgTex{
-        GetTexture("assets/background-01.png"),
-        GetTexture("assets/background-02.png")
-    };
-
-    BGSpriteComponent* bgComp = new BGSpriteComponent{ bgActor };
-    bgComp->SetScreenSize(Vector2{ 1024.0f, 768.0f });
-    bgComp->SetScrollSpeed(-100.0f);
-    bgComp->SetBGTextures(bgTex);
-
-    std::vector<SDL_Texture*> starsTex{
-        GetTexture("assets/stars.png"),
-        GetTexture("assets/stars.png")
-    };
-
-    bgComp = new BGSpriteComponent{ bgActor };
-    bgComp->SetScreenSize(Vector2{ 1024.0f, 768.0f });
-    bgComp->SetScrollSpeed(-200.0f);
-    bgComp->SetBGTextures(starsTex);
-}
+void Game::LoadData() {}
 
 void Game::UnloadData() {
     while (!mActors.empty()) {
@@ -114,8 +86,6 @@ void Game::ProcessInput() {
     if (state[SDL_SCANCODE_ESCAPE]) {
         mIsRunning = false;
     }
-
-    mShip->ProcessKeyboard(state);
 }
 
 void Game::UpdateGame() {
@@ -152,7 +122,7 @@ void Game::UpdateGame() {
     }
 }
 
-void Game::GenerateOutput() const {
+void Game::GenerateOutput() {
     SDL_SetRenderDrawColor(mRenderer, 0, 0, 0, 255);
     SDL_RenderClear(mRenderer);
 

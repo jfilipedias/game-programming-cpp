@@ -26,13 +26,27 @@ void Actor::Update(float deltaTime) {
     }
 }
 
-void Actor::UpdateComponents(float deltaTime) const {
+void Actor::UpdateComponents(float deltaTime) {
     for (Component* comp : mComponents) {
         comp->Update(deltaTime);
     }
 }
 
 void Actor::UpdateActor(float deltaTime) {}
+
+void Actor::ProcessInput(const bool* keyState) {
+    if (mState != EActive) {
+        return;
+    }
+
+    for (Component* comp : mComponents) {
+        comp->ProcessInput(keyState);
+    }
+
+    ActorInput(keyState);
+}
+
+void Actor::ActorInput(const bool* keyState) {}
 
 void Actor::AddComponent(Component* component) {
     int order{ component->GetUpdateOrder() };
@@ -46,7 +60,7 @@ void Actor::AddComponent(Component* component) {
     mComponents.insert(iter, component);
 }
 
-void Actor::RemoveComponent(const Component* component) {
+void Actor::RemoveComponent(Component* component) {
     std::vector<Component*>::iterator iter{ std::ranges::find(mComponents, component) };
     if (iter != mComponents.end()) {
         mComponents.erase(iter);

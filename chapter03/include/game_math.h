@@ -4,8 +4,38 @@
 namespace GameMath {
 const float Pi = 3.1415926535f;
 
+inline float ToRadian(float degrees) {
+    return degrees * Pi / 180.0f;
+}
+
 inline float ToDegrees(float radians) {
     return radians * 180.0f / Pi;
+}
+
+inline bool NearZero(float val, float epsilon = 0.001f) {
+    return fabs(val) <= epsilon;
+}
+
+// X axis == Cosine(θ)
+inline float Cos(float angle) {
+    return cosf(angle);
+}
+
+// Y axis == Sine(θ)
+inline float Sin(float angle) {
+    return sinf(angle);
+}
+
+inline float Tan(float angle) {
+    return tanf(angle);
+}
+
+inline float Acos(float angle) {
+    return acosf(angle);
+}
+
+inline float Atan2(float y, float x) {
+    return atan2f(y, x);
 }
 
 inline float Sqrt(float value) {
@@ -86,6 +116,11 @@ public:
         Vector2 temp{ vec };
         temp.Normalize();
         return temp;
+    }
+
+    // Dot product between two vectors: a · b
+    static float Dot(const Vector2& a, const Vector2& b) {
+        return a.x * b.x + a.y * b.y;
     }
 
     static const Vector2 Zero;

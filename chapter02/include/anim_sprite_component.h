@@ -4,7 +4,7 @@
 
 class AnimSpriteComponent : public SpriteComponent {
 public:
-    AnimSpriteComponent(class Actor* owner, int drawOrder = 150);
+    AnimSpriteComponent(class Actor* owner, int drawOrder = 110);
 
     void Update(float deltaTimer) override;
     void SetAnimTextures(const std::vector<SDL_Texture*>& textures);
