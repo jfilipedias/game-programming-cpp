@@ -108,7 +108,7 @@ public:
         return GameMath::Sqrt(LengthSquared());
     }
 
-    float Normalize() {
+    void Normalize() {
         float length{ Length() };
         x /= length;
         y /= length;
