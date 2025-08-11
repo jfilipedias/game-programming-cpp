@@ -7,6 +7,8 @@ public:
     Asteroid(class Game* game);
     ~Asteroid();
 
+    CircleComponent* GetCircle() { return mCircle; }
+
 private:
     CircleComponent* mCircle;
 };

@@ -14,3 +14,5 @@ public:
 private:
     float mRadius;
 };
+
+bool Intersect(const CircleComponent& a, const CircleComponent& b);
