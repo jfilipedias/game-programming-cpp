@@ -10,6 +10,6 @@ public:
     int GetUpdateOrder() const { return mUpdateOrder; }
 
 protected:
-    class Actor* mOwner;
+    Actor* mOwner;
     int mUpdateOrder;
 };

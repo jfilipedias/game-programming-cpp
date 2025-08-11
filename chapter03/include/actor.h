@@ -8,6 +8,7 @@ public:
     enum State {
         EActive,
         EPaused,
+        ERespawning,
         EDead
     };
 
@@ -28,12 +29,12 @@ public:
     float GetRotation() const { return mRotation; }
     void SetRotation(float rotation) { mRotation = rotation; }
 
-    Vector2 GetForward() const { return Vector2(GameMath::Cos(mRotation), -GameMath::Sin(mRotation)); }
+    Vector2 GetForward() const { return Vector2{ GameMath::Cos(mRotation), -GameMath::Sin(mRotation) }; }
 
     State GetState() const { return mState; }
     void SetState(State state) { mState = state; }
 
-    class Game* GetGame() { return mGame; }
+    class Game* GetGame() const { return mGame; }
 
     void AddComponent(class Component* component);
     void RemoveComponent(class Component* component);

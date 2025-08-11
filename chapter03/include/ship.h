@@ -1,5 +1,6 @@
 #pragma once
 #include "actor.h"
+#include "circle_component.h"
 
 class Ship : public Actor {
 public:
@@ -9,5 +10,7 @@ public:
     void ActorInput(const bool* keyState) override;
 
 private:
+    CircleComponent* mCircle;
     float mLaserCooldown;
+    float mRespawnCooldown;
 };

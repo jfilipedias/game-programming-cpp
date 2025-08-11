@@ -73,7 +73,7 @@ void Game::LoadData() {
     bgComp->SetBGTextures(bgTex);
 
     const int numAsteroids{ 20 };
-    for (int i{ 0 }; i < 20; i++) {
+    for (int i{ 0 }; i < numAsteroids; i++) {
         new Asteroid{ this };
     }
 }

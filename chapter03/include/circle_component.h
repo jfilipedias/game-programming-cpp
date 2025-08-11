@@ -4,7 +4,7 @@
 
 class CircleComponent : public Component {
 public:
-    CircleComponent(class Actor* owner);
+    CircleComponent(Actor* owner);
 
     void SetRadius(float radius) { mRadius = radius; }
     float GetRadius() const;
