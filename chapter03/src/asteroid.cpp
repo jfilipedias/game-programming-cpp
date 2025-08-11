@@ -15,4 +15,7 @@ Asteroid::Asteroid(Game* game)
 
     MoveComponent* mc{ new MoveComponent{ this } };
     mc->SetForwardSpeed(150.0f);
+
+    mCircle = new CircleComponent{ this };
+    mCircle->SetRadius(40.0f);
 }
