@@ -1,6 +1,7 @@
 #include "game.h"
 #include "actor.h"
 #include "asteroid.h"
+#include "bg_sprite_component.h"
 #include "game_math.h"
 #include "game_random.h"
 #include "ship.h"
@@ -60,6 +61,16 @@ void Game::LoadData() {
     mShip = new Ship{ this };
     mShip->SetPosition(Vector2{ 512.0f, 384.0f });
     mShip->SetRotation(GameMath::PiOver2);
+
+    Actor* bgActor = new Actor(this);
+    bgActor->SetPosition(Vector2{ 512.0f, 384.0f });
+
+    std::vector<SDL_Texture*> bgTex{ GetTexture("assets/background.png") };
+
+    BGSpriteComponent* bgComp = new BGSpriteComponent{ bgActor };
+    bgComp->SetScreenSize(Vector2{ 1024.0f, 768.0f });
+    bgComp->SetScrollSpeed(0.0f);
+    bgComp->SetBGTextures(bgTex);
 
     const int numAsteroids{ 20 };
     for (int i{ 0 }; i < 20; i++) {
