@@ -1,6 +1,7 @@
 #include "ship.h"
 #include "game.h"
 #include "input_component.h"
+#include "laser.h"
 #include "sprite_component.h"
 
 Ship::Ship(Game* game)
@@ -16,4 +17,18 @@ Ship::Ship(Game* game)
     ic->SetCounterClockwiseKey(SDL_SCANCODE_D);
     ic->SetMaxForwardSpeed(300.0f);
     ic->SetMaxAngularSpeed(GameMath::TwoPi);
+}
+
+void Ship::UpdateActor(float deltaTime) {
+    mLaserCooldown -= deltaTime;
+}
+
+void Ship::ActorInput(const bool* keyState) {
+    if (keyState[SDL_SCANCODE_SPACE] && mLaserCooldown <= 0.0f) {
+        Laser* laser{ new Laser{ GetGame() } };
+        laser->SetPosition(GetPosition());
+        laser->SetRotation(GetRotation());
+
+        mLaserCooldown = 0.5f;
+    }
 }
