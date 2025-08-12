@@ -174,16 +174,27 @@ void Game::AddActor(Actor* actor) {
 }
 
 void Game::RemoveActor(Actor* actor) {
-    std::vector<Actor*>::iterator iter{ std::find(mPendingActors.begin(), mPendingActors.end(), actor) };
+    std::vector<Actor*>::iterator iter{ std::ranges::find(mPendingActors, actor) };
     if (iter != mPendingActors.end()) {
         std::iter_swap(iter, mPendingActors.end());
         mPendingActors.pop_back();
     }
 
-    iter = std::find(mActors.begin(), mActors.end(), actor);
+    iter = std::ranges::find(mActors, actor);
     if (iter != mActors.end()) {
         std::iter_swap(iter, mActors.end());
         mActors.pop_back();
+    }
+}
+
+void Game::AddAsteroid(Asteroid* ast) {
+    mAsteroids.push_back(ast);
+}
+
+void Game::RemoveAsteroid(Asteroid* ast) {
+    std::vector<Asteroid*>::iterator iter{ std::ranges::find(mAsteroids, ast) };
+    if (iter != mAsteroids.end()) {
+        mAsteroids.erase(iter);
     }
 }
 
@@ -201,7 +212,7 @@ void Game::AddSprite(SpriteComponent* sprite) {
 
 void Game::RemoveSprite(SpriteComponent* sprite) {
     // Can't swap because it ruins ordering
-    std::vector<SpriteComponent*>::const_iterator iter{ std::find(mSprites.begin(), mSprites.end(), sprite) };
+    std::vector<SpriteComponent*>::const_iterator iter{ std::ranges::find(mSprites, sprite) };
     mSprites.erase(iter);
 }
 

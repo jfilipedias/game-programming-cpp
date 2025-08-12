@@ -22,3 +22,5 @@ Vector2 GameRandom::GetVector(const Vector2& min, const Vector2& max) {
     Vector2 rand{ GetFloat(), GetFloat() };
     return min + (max - min) * rand;
 }
+
+std::mt19937 GameRandom::sGenerator;
