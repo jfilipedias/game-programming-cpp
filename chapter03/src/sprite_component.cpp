@@ -17,7 +17,7 @@ SpriteComponent::~SpriteComponent() {
 }
 
 void SpriteComponent::Draw(SDL_Renderer* renderer) {
-    if (mTexture == nullptr || mOwner->GetState() == ERespawning) {
+    if (mTexture == nullptr || mOwner->GetState() == Actor::ERespawning) {
         return;
     }
 
