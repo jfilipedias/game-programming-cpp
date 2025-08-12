@@ -20,7 +20,7 @@ Actor::~Actor() {
 }
 
 void Actor::Update(float deltaTime) {
-    if (mState == EActive) {
+    if (mState == Actor::EActive || mState == Actor::ERespawning) {
         UpdateComponents(deltaTime);
         UpdateActor(deltaTime);
     }
