@@ -50,9 +50,13 @@ public:
     float x{ 0.0f };
     float y{ 0.0f };
 
-    Vector2(float x, float y)
-        : x{ x },
-          y{ y } {}
+    Vector2()
+        : x{ 0.0f },
+          y{ 0.0f } {}
+
+    explicit Vector2(float inX, float inY)
+        : x{ inX },
+          y{ inY } {}
 
     // Vector addition: a + b
     friend Vector2 operator+(const Vector2& a, const Vector2& b) {
