@@ -9,7 +9,7 @@
 Ship::Ship(Game* game)
     : Actor{ game },
       mLaserCooldown{ 0.0f } {
-    SpriteComponent* sc{ new SpriteComponent{ this } };
+    SpriteComponent* sc{ new SpriteComponent{ this, 150 } };
     sc->SetTexture(game->GetTexture("assets/ship.png"));
 
     InputComponent* ic{ new InputComponent{ this } };
@@ -28,16 +28,20 @@ void Ship::UpdateActor(float deltaTime) {
     mLaserCooldown -= deltaTime;
     mRespawnCooldown -= deltaTime;
 
-    if (mRespawnCooldown <= 0.0f && GetState() == ERespawning) {
-        SetState(EActive);
+    if (mRespawnCooldown <= 0.0f && GetState() == Actor::ERespawning) {
+        SetState(Actor::EActive);
+    }
+
+    if (GetState() == Actor::ERespawning) {
+        return;
     }
 
     for (Asteroid* ast : GetGame()->GetAsteroids()) {
         if (Intersect(*mCircle, *(ast->GetCircle()))) {
-            ast->SetState(EDead);
+            ast->SetState(Actor::EDead);
             SetPosition(Vector2{ 512.0f, 384.0f });
             SetRotation(GameMath::PiOver2);
-            SetState(ERespawning);
+            SetState(Actor::ERespawning);
             mRespawnCooldown = 2.0f;
             break;
         }

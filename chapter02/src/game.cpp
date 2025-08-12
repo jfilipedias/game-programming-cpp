@@ -174,13 +174,13 @@ void Game::AddActor(Actor* actor) {
 void Game::RemoveActor(Actor* actor) {
     std::vector<Actor*>::iterator iter{ std::ranges::find(mPendingActors, actor) };
     if (iter != mPendingActors.end()) {
-        std::iter_swap(iter, mPendingActors.end());
+        std::iter_swap(iter, mPendingActors.end() - 1);
         mPendingActors.pop_back();
     }
 
     iter = std::find(mActors.begin(), mActors.end(), actor);
     if (iter != mActors.end()) {
-        std::iter_swap(iter, mActors.end());
+        std::iter_swap(iter, mActors.end() - 1);
         mActors.pop_back();
     }
 }
