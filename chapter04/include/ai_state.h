@@ -15,9 +15,9 @@ protected:
     class AIComponent* mOwner;
 };
 
-class DeathPatrol : AIState {
+class PatrolState : AIState {
 public:
-    DeathPatrol(class AIComponent* owner)
+    PatrolState(class AIComponent* owner)
         : AIState{ owner } {}
 
     void Update(float deltaTime) override;
@@ -29,9 +29,9 @@ public:
     }
 };
 
-class DeathAttack : AIState {
+class AttackState : AIState {
 public:
-    DeathAttack(class AIComponent* owner)
+    AttackState(class AIComponent* owner)
         : AIState{ owner } {}
 
     void Update(float deltaTime) override;
