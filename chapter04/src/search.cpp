@@ -56,3 +56,57 @@ bool BFS(const Graph& graph, const GraphNode* start, const GraphNode* goal, Node
 
     return pathFound;
 }
+
+float ComputeHeuristic(const WeightedGraphNode* a, const WeightedGraphNode* b) {
+    return 0.0f;
+}
+
+struct GBFSScrath {
+    const WeightedEdge* mParentEdge = nullptr;
+    float mHeuristic = 0.0f;
+    bool mInOpenSet = false;
+    bool mInClosedSet = false;
+};
+
+using GBFSMap = std::unordered_map<const WeightedGraphNode*, GBFSScrath>;
+
+bool GBFS(const WeightedGraph& graph, const WeightedGraphNode* start, const WeightedGraphNode* goal, GBFSMap& outMap) {
+    std::vector<const WeightedGraphNode*> openSet;
+
+    const WeightedGraphNode* current{ start };
+    outMap[current].mInClosedSet = true;
+
+    do {
+        for (const WeightedEdge* edge : current->mEdges) {
+            const WeightedGraphNode* neighbor{ edge->mTo };
+            GBFSScrath& data{ outMap[neighbor] };
+
+            if (!data.mInClosedSet) {
+                data.mParentEdge = edge;
+                if (!data.mInOpenSet) {
+                    data.mHeuristic = ComputeHeuristic(neighbor, goal);
+                    data.mInOpenSet = true;
+                    openSet.push_back(neighbor);
+                }
+            }
+        }
+
+        if (openSet.empty()) {
+            break;
+        }
+
+        std::vector<const WeightedGraphNode*>::iterator iter{ std::min_element(
+            openSet.begin(),
+            openSet.end(),
+            [&outMap](const WeightedGraphNode* a, const WeightedGraphNode* b) {
+                return outMap[a].mHeuristic < outMap[b].mHeuristic;
+            }) };
+
+        current = *iter;
+        openSet.erase(iter);
+        outMap[current].mInOpenSet = false;
+        outMap[current].mInClosedSet = true;
+    } while (current != goal);
+
+    return current == goal;
+}
