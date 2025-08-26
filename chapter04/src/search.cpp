@@ -1,3 +1,4 @@
+#include <limits>
 #include <queue>
 #include <unordered_map>
 #include <vector>
@@ -181,4 +182,114 @@ bool AStar(const WeightedGraph& graph, const WeightedGraphNode* start, const Wei
     };
 
     return current == goal;
+}
+
+struct GameState {
+    enum SquareState { Empty,
+                       X,
+                       O };
+    SquareState mBoard[3][3];
+};
+
+struct GameTreeNode {
+    std::vector<GameTreeNode*> mChildren;
+    GameState mState;
+};
+
+float GetScore(const GameState& state) {
+    // Are any of the rows the same?
+    for (int i{ 0 }; i < 3; i++) {
+        bool same{ true };
+        GameState::SquareState v{ state.mBoard[i][0] };
+
+        for (int j{ 1 }; j < 3; j++) {
+            if (state.mBoard[i][j] != v) {
+                same = false;
+            }
+        }
+
+        if (same) {
+            if (v == GameState::X) {
+                return 1.0f;
+            } else {
+                return -1.0f;
+            }
+        }
+    }
+
+    // Are any of the columns the same?
+    for (int j{ 0 }; j < 3; j++) {
+        bool same{ true };
+        GameState::SquareState v{ state.mBoard[0][j] };
+
+        for (int i{ 1 }; i < 3; i++) {
+            if (state.mBoard[j][i] != v) {
+                same = false;
+            }
+        }
+
+        if (same) {
+            if (v == GameState::X) {
+                return 1.0f;
+            } else {
+                return -1.0f;
+            }
+        }
+    }
+
+    // What about diagonals?
+    if (((state.mBoard[0][0] == state.mBoard[1][1]) &&
+         (state.mBoard[1][1] == state.mBoard[2][2])) ||
+        ((state.mBoard[2][0] == state.mBoard[1][1]) &&
+         (state.mBoard[1][1] == state.mBoard[0][2]))) {
+        if (state.mBoard[1][1] == GameState::X) {
+            return 1.0f;
+        } else {
+            return -1.0f;
+        }
+    }
+
+    // It's a tie
+    return 0.0f;
+}
+
+float MaxPlayer(const GameTreeNode* node) {
+    if (node->mChildren.empty()) {
+        return GetScore(node->mState);
+    }
+
+    float maxValue{ -std::numeric_limits<float>::infinity() };
+    for (const GameTreeNode* child : node->mChildren) {
+        maxValue = std::max(maxValue, MinPlayer(child));
+    }
+
+    return maxValue;
+}
+
+float MinPlayer(const GameTreeNode* node) {
+    if (node->mChildren.empty()) {
+        return GetScore(node->mState);
+    }
+
+    float minValue{ std::numeric_limits<float>::infinity() };
+    for (const GameTreeNode* child : node->mChildren) {
+        minValue = std::min(minValue, MaxPlayer(child));
+    }
+
+    return minValue;
+}
+
+const GameTreeNode* MinimaxDecider(const GameTreeNode* root) {
+    const GameTreeNode* choice{ nullptr };
+    float maxValue{ -std::numeric_limits<float>::infinity() };
+
+    for (const GameTreeNode* child : root->mChildren) {
+        float v{ MinPlayer(child) };
+        if (v > maxValue) {
+            maxValue = v;
+            choice = child;
+        }
+    }
+
+    return choice;
 }
