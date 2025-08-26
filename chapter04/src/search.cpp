@@ -28,9 +28,9 @@ struct WeightedGraph {
     std::vector<WeightedGraphNode*> mNodes;
 };
 
-using NodeToParentMap = std::unordered_map<const GraphNode*, const GraphNode*>;
+using BFSMap = std::unordered_map<const GraphNode*, const GraphNode*>;
 
-bool BFS(const Graph& graph, const GraphNode* start, const GraphNode* goal, NodeToParentMap& outMap) {
+bool BFS(const Graph& graph, const GraphNode* start, const GraphNode* goal, BFSMap& outMap) {
     bool pathFound{ false };
 
     std::queue<const GraphNode*> q;
