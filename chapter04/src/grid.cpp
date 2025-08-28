@@ -42,7 +42,7 @@ Grid::Grid(class Game* game)
         }
     }
 
-    FindPath(GetEndTile(), GetStartTile());
+    FindPath(GetGoalTile(), GetStartTile());
     UpdatePathTiles(GetStartTile());
 
     mNextEnemy = mEnemyTime;
@@ -74,4 +74,64 @@ void Grid::ProcessClick(int x, int y) {
     if (x >= 0 && x < static_cast<int>(mNumCols) && y >= 0 && y < static_cast<int>(mNumRows)) {
         SelectTile(x, y);
     }
+}
+
+// A* pathfinding algorithm
+bool Grid::FindPath(Tile* start, Tile* goal) {
+    for (size_t i{ 0 }; i < mNumRows; i++) {
+        for (size_t j{ 0 }; j < mNumCols; j++) {
+            mTiles[i][j]->g = 0.0f;
+            mTiles[i][j]->mInOpenSet = false;
+            mTiles[i][j]->mInClosedSet = false;
+        }
+    }
+
+    std::vector<Tile*> openSet;
+
+    Tile* current = start;
+    current->mInOpenSet = true;
+
+    while (current != goal) {
+        for (Tile* neighbor : current->mAdjacents) {
+            if (neighbor->mBlocked || neighbor->mInClosedSet) {
+                continue;
+            }
+
+            if (neighbor->mInOpenSet) {
+                float newG = current->g + mTileSize;
+                if (newG < neighbor->g) {
+                    neighbor->mParent = current;
+                    neighbor->g = newG;
+                    neighbor->f = neighbor->g + neighbor->h;
+                }
+            } else {
+                neighbor->mParent = current;
+                neighbor->h = (neighbor->GetPosition() - goal->GetPosition()).Length();
+                neighbor->g = neighbor->g + mTileSize;
+                neighbor->f = neighbor->g + neighbor->h;
+                openSet.push_back(neighbor);
+                neighbor->mInOpenSet = true;
+            }
+        }
+
+        if (openSet.empty()) {
+            break;
+        }
+
+        std::vector<Tile*>::iterator iter{
+            std::min_element(
+                openSet.begin(),
+                openSet.end(),
+                [](Tile* a, Tile* b) {
+                    return a->f < b.f;
+                })
+        };
+
+        current = *iter;
+        openSet.erase(iter);
+        current->mInOpenSet = false;
+        current->mInClosedSet = true;
+    }
+
+    return current == goal;
 }
