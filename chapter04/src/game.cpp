@@ -11,11 +11,10 @@ Game::Game()
       mRenderer{ nullptr },
       mTicksCount{ 0 },
       mIsRunning{ true },
-      mUpdatingActors{ false },
-      mShip(nullptr) {}
+      mUpdatingActors{ false } {}
 
 bool Game::Initialize() {
-    bool success{ SDL_Init(SDL_INIT_VIDEO) };
+    bool success{ SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) };
     if (!success) {
         SDL_Log("Unable to initialize SDL: %s", SDL_GetError());
         return false;
@@ -37,8 +36,6 @@ bool Game::Initialize() {
         SDL_Log("Failed to enable VSync: %s", SDL_GetError());
         return false;
     }
-
-    GameRandom::Init();
 
     LoadData();
 
