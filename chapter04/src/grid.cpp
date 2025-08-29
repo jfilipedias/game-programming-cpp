@@ -1,5 +1,6 @@
 #include "grid.h"
 #include "tile.h"
+#include "tower.h"
 
 Grid::Grid(class Game* game)
     : Actor{ game },
@@ -20,7 +21,7 @@ Grid::Grid(class Game* game)
     }
 
     GetStartTile()->SetTileState(Tile::EStart);
-    GetGoalTile()->SetTileState(Tile::EBase);
+    GetEndTile()->SetTileState(Tile::EBase);
 
     for (size_t i{ 0 }; i < mNumRows; i++) {
         for (size_t j{ 0 }; j < mNumCols; j++) {
@@ -42,7 +43,7 @@ Grid::Grid(class Game* game)
         }
     }
 
-    FindPath(GetGoalTile(), GetStartTile());
+    FindPath(GetEndTile(), GetStartTile());
     UpdatePathTiles(GetStartTile());
 
     mNextEnemy = mEnemyTime;
@@ -123,7 +124,7 @@ bool Grid::FindPath(Tile* start, Tile* goal) {
                 openSet.begin(),
                 openSet.end(),
                 [](Tile* a, Tile* b) {
-                    return a->f < b.f;
+                    return a->f < b->f;
                 })
         };
 
@@ -134,4 +135,16 @@ bool Grid::FindPath(Tile* start, Tile* goal) {
     }
 
     return current == goal;
+}
+
+void Grid::BuildTower() {
+    if (mSelectedTile == nullptr || mSelectedTile->mBlocked) {
+        return;
+    }
+
+    mSelectedTile->mBlocked = true;
+
+    if (FindPath(GetEndTile(), GetStartTile())) {
+        Tower* t = new Tower{ GetGame() };
+    }
 }

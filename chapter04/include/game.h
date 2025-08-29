@@ -1,4 +1,5 @@
 #pragma once
+#include "game_math.h"
 #include <SDL3/SDL.h>
 #include <string>
 #include <unordered_map>
@@ -19,6 +20,10 @@ public:
 
     SDL_Texture* GetTexture(const std::string& fileName);
 
+    class Grid* GetGrid() { return mGrid; }
+    std::vector<class Enemy*> GetEnemies() { return mEnemies; }
+    class Enemy* GetNearestEnemy(const Vector2& pos);
+
 private:
     void ProcessInput();
     void UpdateGame();
@@ -38,4 +43,8 @@ private:
     Uint32 mTicksCount;
     bool mIsRunning;
     bool mUpdatingActors;
+
+    class Grid* mGrid;
+    std::vector<class Enemy*> mEnemies;
+    float mNextEnemy;
 };
