@@ -1,4 +1,5 @@
 #include "grid.h"
+#include "enemy.h"
 #include "tile.h"
 #include "tower.h"
 
@@ -143,8 +144,31 @@ void Grid::BuildTower() {
     }
 
     mSelectedTile->mBlocked = true;
-
     if (FindPath(GetEndTile(), GetStartTile())) {
         Tower* t = new Tower{ GetGame() };
+        t->SetPosition(mSelectedTile->GetPosition());
+    } else {
+        mSelectedTile->mBlocked = false;
+        FindPath(GetEndTile(), GetStartTile());
+    }
+
+    UpdatePathTiles(GetStartTile());
+}
+
+Tile* Grid::GetStartTile() {
+    return mTiles[3][0];
+}
+
+Tile* Grid::GetEndTile() {
+    return mTiles[3][15];
+}
+
+void Grid::UpdateActor(float deltaTime) {
+    Actor::UpdateActor(deltaTime);
+
+    mNextEnemy -= deltaTime;
+    if (mNextEnemy <= 0.0f) {
+        new Enemy{ GetGame() };
+        mNextEnemy += mEnemyTime;
     }
 }

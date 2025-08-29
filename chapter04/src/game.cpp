@@ -2,6 +2,7 @@
 #include "actor.h"
 #include "game_math.h"
 #include "game_random.h"
+#include "grid.h"
 #include "sprite_component.h"
 #include <SDL3_image/SDL_image.h>
 #include <algorithm>
@@ -88,6 +89,13 @@ void Game::ProcessInput() {
     if (state[SDL_SCANCODE_ESCAPE]) {
         mIsRunning = false;
     }
+
+    if (state[SDL_SCANCODE_B]) {
+        mGrid->BuildTower();
+    }
+
+    float x, y;
+    Uint32 mouseButtons{ SDL_GetMouseState(&x, &y) };
 
     mUpdatingActors = true;
     for (Actor* actor : mActors) {
