@@ -85,21 +85,24 @@ void Game::ProcessInput() {
         }
     }
 
-    const bool* state{ SDL_GetKeyboardState(nullptr) };
-    if (state[SDL_SCANCODE_ESCAPE]) {
+    const bool* keyboardState{ SDL_GetKeyboardState(nullptr) };
+    if (keyboardState[SDL_SCANCODE_ESCAPE]) {
         mIsRunning = false;
     }
 
-    if (state[SDL_SCANCODE_B]) {
+    if (keyboardState[SDL_SCANCODE_B]) {
         mGrid->BuildTower();
     }
 
     float x, y;
-    Uint32 mouseButtons{ SDL_GetMouseState(&x, &y) };
+    Uint32 mouseState{ SDL_GetMouseState(&x, &y) };
+    if (SDL_BUTTON_MASK(mouseState) & SDL_BUTTON_LEFT) {
+        mGrid->ProcessClick(x, y);
+    }
 
     mUpdatingActors = true;
     for (Actor* actor : mActors) {
-        actor->ProcessInput(state);
+        actor->ProcessInput(keyboardState);
     }
     mUpdatingActors = false;
 }
