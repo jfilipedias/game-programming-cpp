@@ -21,7 +21,7 @@ public:
     SDL_Texture* GetTexture(const std::string& fileName);
 
     class Grid* GetGrid() { return mGrid; }
-    std::vector<class Enemy*> GetEnemies() { return mEnemies; }
+    std::vector<class Enemy*>& GetEnemies() { return mEnemies; }
     class Enemy* GetNearestEnemy(const Vector2& pos);
 
 private:

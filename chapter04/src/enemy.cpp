@@ -25,9 +25,7 @@ Enemy::Enemy(Game* game)
 }
 
 Enemy::~Enemy() {
-    std::vector<Enemy*>::iterator iter{ std::find(
-        GetGame()->GetEnemies().begin(),
-        GetGame()->GetEnemies().end(), this) };
+    std::vector<Enemy*>::iterator iter{ std::ranges::find(GetGame()->GetEnemies(), this) };
 
     GetGame()->GetEnemies().erase(iter);
 }
