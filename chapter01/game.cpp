@@ -78,7 +78,7 @@ void Game::ProcessInput() {
 }
 
 void Game::UpdateGame() {
-    Uint64 deadline{ SDL_GetTicks() + 16 };
+    Uint64 deadline{ mTicksCount + 16 };
     while (deadline > SDL_GetTicks())
         ;
 

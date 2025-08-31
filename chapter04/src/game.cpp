@@ -1,6 +1,6 @@
 #include "game.h"
 #include "actor.h"
-#include "game_math.h"
+#include "enemy.h"
 #include "game_random.h"
 #include "grid.h"
 #include "sprite_component.h"
@@ -53,6 +53,7 @@ void Game::Shutdown() {
 }
 
 void Game::LoadData() {
+    mGrid = new Grid{ this };
 }
 
 void Game::UnloadData() {
@@ -108,7 +109,7 @@ void Game::ProcessInput() {
 }
 
 void Game::UpdateGame() {
-    Uint64 deadline = SDL_GetTicks() + 16;
+    Uint64 deadline{ mTicksCount + 16 };
     while (deadline > SDL_GetTicks())
         ;
 
@@ -214,4 +215,24 @@ SDL_Texture* Game::GetTexture(const std::string& fileName) {
 
     mTextures.emplace(fileName.c_str(), tex);
     return tex;
+}
+
+Enemy* Game::GetNearestEnemy(const Vector2& pos) {
+    Enemy* nearest{ nullptr };
+
+    if (mEnemies.size() == 0) {
+        return nullptr;
+    }
+
+    nearest = mEnemies[0];
+    float nearestDistSq{ (pos - mEnemies[0]->GetPosition()).LengthSquared() };
+    for (size_t i{ 1 }; i < mEnemies.size(); i++) {
+        float newDistSq{ (pos - mEnemies[i]->GetPosition()).LengthSquared() };
+        if (newDistSq < nearestDistSq) {
+            nearestDistSq = newDistSq;
+            nearest = mEnemies[i];
+        }
+    }
+
+    return nearest;
 }
