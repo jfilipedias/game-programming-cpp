@@ -6,7 +6,7 @@
 AIComponent::AIComponent(Actor* owner)
     : Component{ owner } {}
 
-void AIComponent::RegisterState(const AIState* state) {
+void AIComponent::RegisterState(AIState* state) {
     mStateMap.emplace(state->GetName(), state);
 }
 

@@ -253,6 +253,8 @@ float GetScore(const GameState& state) {
     return 0.0f;
 }
 
+float MinPlayer(const GameTreeNode* node);
+
 float MaxPlayer(const GameTreeNode* node) {
     if (node->mChildren.empty()) {
         return GetScore(node->mState);
@@ -294,6 +296,8 @@ const GameTreeNode* MinimaxDecider(const GameTreeNode* root) {
     return choice;
 }
 
+float AlphaBetaMin(const GameTreeNode* node, float alpha, float beta);
+
 float AlphaBetaMax(const GameTreeNode* node, float alpha, float beta) {
     if (node->mChildren.empty()) {
         return GetScore(node->mState);
@@ -330,7 +334,7 @@ float AlphaBetaMin(const GameTreeNode* node, float alpha, float beta) {
     return minValue;
 }
 
-const GameTreeNode* AlphaBetaDecider(const GameTreeNode* root, int depth, float alpha, float beta) {
+const GameTreeNode* AlphaBetaDecider(const GameTreeNode* root) {
     const GameTreeNode* choice{ nullptr };
     float maxValue{ -std::numeric_limits<float>::infinity() };
     float beta{ std::numeric_limits<float>::infinity() };

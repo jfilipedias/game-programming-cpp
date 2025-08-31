@@ -1,9 +1,8 @@
 #include "bullet.h"
-
-#include "../../chapter03/include/circle_component.h"
-#include "../../chapter03/include/move_component.h"
+#include "circle_component.h"
 #include "enemy.h"
 #include "game.h"
+#include "move_component.h"
 #include "sprite_component.h"
 
 Bullet::Bullet(Game* game)
@@ -14,7 +13,7 @@ Bullet::Bullet(Game* game)
     MoveComponent* mc = new MoveComponent{ this };
     mc->SetForwardSpeed(400.0f);
 
-    mCircleComp = new MoveComponent{ this };
+    mCircleComp = new CircleComponent{ this };
     mCircleComp->SetRadius(5.0f);
 
     mLiveTime = 1.0f;

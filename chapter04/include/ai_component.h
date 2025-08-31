@@ -10,7 +10,7 @@ public:
     void Update(float deltaTime) override;
     void ChangeState(const std::string& name);
 
-    void RegisterState(const class AIState* state);
+    void RegisterState(class AIState* state);
 
 private:
     std::unordered_map<std::string, class AIState*> mStateMap;
