@@ -65,6 +65,20 @@ void Grid::SelectTile(size_t row, size_t col) {
     }
 }
 
+void Grid::UpdatePathTiles(Tile* start) {
+    for (size_t i{ 0 }; i < mNumRows; i++) {
+        for (size_t j{ 0 }; j < mNumCols; j++) {
+            mTiles[i][j]->SetTileState(Tile::EDefault);
+        }
+    }
+
+    Tile* t{ start->mParent };
+    while (t != GetEndTile()) {
+        t->SetTileState(Tile::EPath);
+        t = t->mParent;
+    }
+}
+
 void Grid::ProcessClick(int x, int y) {
     y -= static_cast<int>(mStartY - mTileSize / 2);
     if (y < 0) {
