@@ -88,7 +88,7 @@ void Grid::ProcessClick(int x, int y) {
     x /= static_cast<int>(mTileSize);
     y /= static_cast<int>(mTileSize);
     if (x >= 0 && x < static_cast<int>(mNumCols) && y >= 0 && y < static_cast<int>(mNumRows)) {
-        SelectTile(x, y);
+        SelectTile(y, x);
     }
 }
 
