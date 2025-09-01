@@ -98,7 +98,7 @@ void Game::ProcessInput() {
     float x, y;
     Uint32 mouseState{ SDL_GetMouseState(&x, &y) };
     if (SDL_BUTTON_MASK(mouseState) & SDL_BUTTON_LEFT) {
-        mGrid->ProcessClick(x, y);
+        mGrid->ProcessClick(static_cast<int>(x), static_cast<int>(y));
     }
 
     mUpdatingActors = true;
