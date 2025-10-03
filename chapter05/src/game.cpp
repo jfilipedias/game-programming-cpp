@@ -225,25 +225,26 @@ void Game::RemoveSprite(SpriteComponent* sprite) {
 }
 
 SDL_Texture* Game::GetTexture(const std::string& fileName) {
-    std::unordered_map<std::string, SDL_Texture*>::iterator iter{ mTextures.find(fileName.c_str()) };
-    if (iter != mTextures.end()) {
-        return iter->second;
-    }
-
-    SDL_Surface* surf{ IMG_Load(fileName.c_str()) };
-    if (!surf) {
-        SDL_Log("Failed to load texture file %s", fileName.c_str());
-        return nullptr;
-    }
-
-    SDL_Texture* tex{ SDL_CreateTextureFromSurface(mRenderer, surf) };
-    SDL_DestroySurface(surf);
-
-    if (!tex) {
-        SDL_Log("Failed to convert surface to texture for %s", fileName.c_str());
-        return nullptr;
-    }
-
-    mTextures.emplace(fileName.c_str(), tex);
-    return tex;
+    return nullptr;
+    // std::unordered_map<std::string, SDL_Texture*>::iterator iter{ mTextures.find(fileName.c_str()) };
+    // if (iter != mTextures.end()) {
+    //     return iter->second;
+    // }
+    //
+    // SDL_Surface* surf{ IMG_Load(fileName.c_str()) };
+    // if (!surf) {
+    //     SDL_Log("Failed to load texture file %s", fileName.c_str());
+    //     return nullptr;
+    // }
+    //
+    // SDL_Texture* tex{ SDL_CreateTextureFromSurface(mRenderer, surf) };
+    // SDL_DestroySurface(surf);
+    //
+    // if (!tex) {
+    //     SDL_Log("Failed to convert surface to texture for %s", fileName.c_str());
+    //     return nullptr;
+    // }
+    //
+    // mTextures.emplace(fileName.c_str(), tex);
+    // return tex;
 }
