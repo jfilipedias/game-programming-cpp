@@ -163,14 +163,16 @@ void Game::UpdateGame() {
 }
 
 void Game::GenerateOutput() {
-    // SDL_SetRenderDrawColor(mRenderer, 0, 0, 0, 255);
-    // SDL_RenderClear(mRenderer);
-    //
+    glad_glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    glad_glClear(GL_COLOR_BUFFER_BIT);
+
     // for (SpriteComponent* sprite : mSprites) {
     //     sprite->Draw(mRenderer);
     // }
     //
     // SDL_RenderPresent(mRenderer);
+
+    SDL_GL_SwapWindow(mWindow);
 }
 
 void Game::AddActor(Actor* actor) {
